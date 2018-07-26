@@ -1,0 +1,5 @@
+penambahan fitur :
+- aksi : ubah, hapus di daftar
+- tombol tambah : bahan baku
+- kolom kode produk di laporan harga pokok produksi(tabel produksi2)
+- form login, logout, dan search

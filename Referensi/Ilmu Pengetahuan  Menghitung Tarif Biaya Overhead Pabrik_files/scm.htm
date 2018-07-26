@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script async="" src="scm_data/resolve.json"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SCM Music Player</title>
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="http://scmplayer.co/icon.png">
+<link rel="stylesheet" type="text/css" href="scm_data/reset.css">
+<style type="text/css">
+body{ padding-top:25px; overflow:hidden; background:transparent; }
+#contentW, #playlistW, #playerW{ position:absolute; }
+#contentW{
+  z-index:10; top:0; bottom:0; left:0; right:0;
+  background: white;
+}
+#playlistW{ z-index:1; right:0; top:0; bottom:0; width:0; }
+#playerW{z-index:2; left:0; right:0; height:0;}
+#content, #overlay{ position:relative; height:100%; width:100%;  }
+#bsap_1299699 iframe { width: 250px; height: 250px; }
+@media (max-width: 750px) { #seeker{ display: none; } }
+@media (max-width: 600px) { #title{ display: none; } }
+@media (max-width: 400px) { #tooltip{ display: none; } }
+</style>
+<link rel="stylesheet" type="text/css" href="scm_data/scm.css">
+<link rel="stylesheet" type="text/css" data-bind="attr:{href:skin}" id="skin" href="scm_data/skin.css">
+<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="knockout" src="scm_data/knockout-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="scm_data/jquery.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="scm_data/underscore-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="text" src="scm_data/text.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="scm" src="scm_data/scm.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="song" src="scm_data/song.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="scm.ui" src="scm_data/scm_002.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="binding/slider" src="scm_data/slider.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="binding/scm" src="scm_data/scm_003.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lib/knockout/pauseable" src="scm_data/pauseable.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.ui" src="scm_data/jquery-ui.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="playback/soundcloud" src="scm_data/soundcloud.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="playback/soundmanager" src="scm_data/soundmanager.js"></script></head>
+<body>
+	<div id="contentW" data-bind="style:{top:placement()=='top'?'25px':'0',
+		bottom:placement()=='top'?'0':'25px', right:showPlaylist()?'251px':'0'}" style="top: 25px; bottom: 0px; right: 0px;">
+<script type="text/javascript">
+(function(){
+ 	if(window==window.parent)
+		location.href = 'http://scmplayer.co';
+	var addEvent = function(elm, evType, fn) {
+			if(elm.addEventListener) 
+				elm.addEventListener(evType, fn);
+			else if (elm.attachEvent) 
+				elm.attachEvent('on' + evType, fn);
+			else
+				elm['on' + evType] = fn;
+		},
+		url = location.hash.substr(1),
+		host = url.substr(0,url.indexOf('/',10));
+
+  window.isBlog = /(blogspot|tumblr.com)/.test(host);
+	window.SCMQueue = [];
+	addEvent(window,'message',function(e){
+		var data = e.data;
+		if(data.indexOf('SCM')!=0) 
+			return;
+		if(window.SCM && window.Song)
+			(new Function("SCM,Song",data))(SCM,Song);
+		else
+			SCMQueue.push(data);
+	});
+	document.write('<iframe src="javascript:location.replace(\''+url+'\');" frameborder="0" id="content" allowtransparency="true" name="content"></iframe>');
+})();
+</script><iframe src="javascript:location.replace('http://ilmupengetahuan-hendrik.blogspot.com/2016/03/menghitung-tarif-biaya-overhead-pabrik.html');" id="content" allowtransparency="true" name="content" style="height: 629px;" frameborder="0"></iframe>
+</div>
+<div id="playerW" data-bind="style:{ top:placement()=='top'?'0':'auto', 
+	bottom:placement()=='top'?'auto':'0',height:'25px'}" style="top: 0px; bottom: auto; height: 25px;"><div id="player">
+	<div class="item button" data-bind="
+		click:previous,
+		maskBtn:{css:'mainImage'}
+		" id="previous"></div> 
+	<div class="item button" data-bind="
+		click:play,
+		visible:!isPlay(),
+		maskBtn:{hasOffset:false}
+		" id="play" style="display: none;"></div> 
+	<div class="item button" data-bind="
+		click:pause,
+		visible:isPlay(),
+		maskBtn:{css:'mainImage'}
+		" id="pause"></div> 
+	<div class="item button" data-bind="
+		click:next,
+		maskBtn:{css:'mainImage'}
+		" id="next"></div> 
+	<div class="text" id="title" data-bind="
+		followLeft:'#seeker'
+		">
+    <a data-bind="text:display, attr: { href: current().url() }" target="_blank" id="titleLink" href="https://soundcloud.com/weloveleeminho/the-heirs-ost-moment">The Heirs OST - Moment</a>
+	</div> 
+	<div class="item ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-bind="
+		slider:playedFraction, 
+		sliderOptions:{step:0.00001,min:0,max:1,pauseable:true}
+		" id="seeker" style="left: 245px;"> 
+		<div id="seekerSliderBase" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;"></div> 
+		<div id="seekerBase"></div> 
+		<div id="seekerBuffered" data-bind="
+			style:{width:(loadedFraction()*100)+'%'}
+			" style="width: 0%;"></div> 
+	</div> 
+	<div class="text" id="tooltip"> 
+		<a href="http://scmplayer.co/" id="scmLink" target="_blank">SCM Music Player</a> 
+	</div> 
+	<div class="text item" id="timer" data-bind="text:timer">00:00|00:00</div> 
+	<div class="item ui-slider-horizontal" data-bind="
+		innerBound:{bound:'.bound',handle:'.ui-slider-handle'}
+		" id="volume"> 
+		<div class="bound ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-bind="
+			slider:volume,
+			sliderOptions:{liveUpdate:true},
+			caption:'Volume: '+volume()+'%',
+			captionOptions:{target:'#tooltip a',trigger:'slide'}
+			" style="width: 56px; margin-left: 7px; margin-right: 7px;">
+		<div class="ui-slider-handle ui-state-default ui-corner-all" id="volumeSlider" style="left: 90%; margin-left: -7px;"></div> 
+		</div>
+	</div> 
+	<div class="item button" id="list" data-bind="maskBtn:{css:'mainImage',align:'right'},
+		click:togglePlaylist,
+		caption:'Toggle Playlist',
+		captionOptions:{target:'#tooltip a',trigger:'hover'}
+		"></div> 
+	<div class="mainImage" id="baseRight"></div> 
+	<div class="mainImage" id="baseLeft"></div> 
+</div>
+</div>
+<div id="playlistW" data-bind="style:{top:placement()=='top'?'25px':'0',
+		bottom:placement()=='top'?'0':'25px', width:showPlaylist()?'251px':'0'}" style="top: 25px; bottom: 0px; width: 0px;"><div id="playlist">
+	<div class="module"> 
+		<h3>Playlist</h3> 
+	</div> 
+  <div class="module" id="playlistContainer">
+    <ol class="items" style="bottom:250px;"> 
+      <!-- ko foreach:playlist -->
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title"> Katy Perry - Unconditionally</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Kimbum Soo - Appear</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Junggigo Feat Minwoo - To Good</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Kim Soo Hyun - Dreaming</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Lee MinHo - My Everything</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Once Mekel - Simphony Yang Indah</span>&nbsp;
+			</li> 
+      
+			<li class="item focus odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">The Heirs OST - Moment</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Guang Liang - Yue Ding</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">From This Moment On</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">JJ Lin - Xiao Jiu Wo</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Jackie Chan ft Kim Hee Sun - Endless ove</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Gita Bahana Nusantara - Pancasila Rumah Kita</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Ello, Ipang, Berry St Locco  dan Lala - Buka Semangat Baru</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Disney's Tangled Cover - I See The Light</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">겨울사랑 (Winter Story)</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Love You Even Though I Hate You 미워도 사랑하니까</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">小鬼黃鴻升 - 千分之一</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Martina McBride - My Valentine</span>&nbsp;
+			</li> 
+      
+			<li class="item odd" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Wang Leehom 王力宏 - 你的愛 Your Love</span>&nbsp;
+			</li> 
+      
+			<li class="item even" data-bind="
+			visible:isValid(),
+			click:$root.play,
+			css:{focus:on, even:$index()%2==1, odd:$index()%2==0}
+			">
+				<span class="title" data-bind="text:title">Moon Myung Jin - Crying Again </span>&nbsp;
+			</li> 
+      <!-- /ko -->
+		</ol> 
+    <div class="odd" style="z-index:167; margin-left:-25px; position:absolute; height:250px; overflow: hidden; left:0; right:0; bottom:0;">
+      <div id="bsap_1306386" style="transform: scale(0.84);"></div>
+    </div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript" src="scm_data/soundmanager2-nodebug-jsmin.js"></script>
+<script type="text/javascript" src="scm_data/config.js"></script>
+<script type="text/javascript" src="scm_data/require.js"></script>
+<script type="text/javascript">
+require([
+	'knockout','jquery','underscore',
+	'text!view/player.html',
+	'text!view/playlist.html',
+	'scm','song','scm.ui',
+
+	'binding/slider',
+	'binding/scm'
+	],function(ko,$,_,playerView,playlistView,SCM,Song){
+		$("#playerW").html(playerView);
+		$("#playlistW").html(playlistView);
+
+    SCM.isBlog = window.isBlog;
+
+		var config = SCM.config;
+    var url = location.hash.substr(1);
+		SCM.config = _.once(function(data){
+			config(data);
+			ko.applyBindings(SCM,$('#skin').get(0));
+			setTimeout(function(){
+				$('#contentW,#playerW,#playlistW').each(function(){
+					ko.applyBindings(SCM,this);
+					$(this).mousedown(function(){
+						return false;
+					});
+				});
+        resize();
+			},200);
+      SCM.showPlaylist.subscribe(checkPlaylist);
+      checkPlaylist();
+		});
+
+		while(SCMQueue.length > 0)
+			(new Function('SCM,Song',SCMQueue.shift()))(SCM,Song);
+		window.SCM = SCM;
+		window.Song = Song;
+
+		var resize = function(){
+			$('#content').height($('#contentW').height());
+		}
+		$(window).resize(_.throttle(resize,100));
+
+    var shown = false, count = 0;
+    function checkPlaylist(){
+      //if((count > 0 || location.hash.indexOf('.blogspot.')===-1) && SCM.showPlaylist() && !shown){
+      //if(count > 0 && SCM.showPlaylist() && !shown){
+      if(SCM.showPlaylist() && !shown){
+        // $.getScript('https://s3.buysellads.com/ac/bsa.js');
+        $('#bsap_1306386').html('<iframe src="https://www.scmplayer.co/ads/300_250.html" scrolling="no" width="300" height="250" frameborder="0"></iframe>');
+        shown = true;
+      }
+      count++;
+    }
+	});
+</script>
+
+
+</body></html>

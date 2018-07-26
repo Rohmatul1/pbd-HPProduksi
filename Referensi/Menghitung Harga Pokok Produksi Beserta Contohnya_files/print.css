@@ -1,0 +1,174 @@
+@media print {
+     a[href]:after {
+    content: none !important;
+  }
+@page {
+     size: 330mm 427mm;
+     margin: 14mm;
+}
+
+.container {   
+     width: 1170px;
+}
+
+.container clearfix{
+     text-align: center;
+}
+
+body {
+     background:white; 
+     font-size:10pt; 
+     margin:0; 
+}
+
+#addthis{
+     display: none;
+}
+
+#sidebar { 
+     display:none; 
+}
+
+.my-custom-sidebar { 
+     display: none; 
+}
+
+.entry-meta{
+     display: none;
+}
+
+#header {
+     /*display: none;*/
+     /*float: left;*/
+}
+
+#logo{
+     margin-left: 10px
+}
+
+#primary-menu-trigger{
+     display: none;
+}
+
+#primary-menu{
+     display: none;
+}
+
+#menu-menu-atas{
+     display: none;
+}
+
+#cobasekarang a {
+     display: none;
+}
+
+#content{ 
+     margin-top: 0px;   
+     margin-left:0; 
+     float:left; 
+     width:100%; 
+}
+
+.content-wrap {
+    margin: 0 auto;
+}
+
+.custom-wrap{
+     margin: 0 auto;
+}
+
+#page-title{
+     display: none;
+}
+
+.button-option{
+     display: none;
+}
+
+.col-md-4 {
+     display: none;
+}
+
+.col-md-8{
+     width: 100%;
+     padding-right: 100px;
+     font-size: 18px;
+}
+
+.right{
+     display: none;
+}
+
+.demo .red { 
+     color:black; 
+     font-weight:bold; 
+}
+
+#content a { 
+     font-weight:bold; 
+     color:#000066; 
+     text-decoration:underline; 
+}
+
+#content{     
+     margin-left:0; 
+     float:none; 
+     width:auto; 
+}
+
+#footer, .ad { 
+     display:none; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+     page-break-after:avoid; 
+     page-break-inside:avoid; 
+}
+
+h3 { 
+     margin-left:10px; 
+     margin-bottom:0px; 
+     padding-bottom:0px; 
+}
+
+blockquote, table, pre {
+      page-break-inside:avoid;
+}
+
+ul, ol, dl  { 
+     page-break-before:avoid; 
+}
+
+img.centered {
+     display: block; 
+     margin-left: auto; 
+     margin-right: auto; 
+}
+
+img.right {
+     padding: 4px; 
+     margin: 0 0 2px 7px; 
+     display: inline; 
+}
+
+img.left {
+     padding: 4px; 
+     margin: 0 7px 2px 0; 
+     display: inline; 
+}
+
+.right {
+      float: right; 
+ }
+
+.left { 
+     float: left; 
+}
+
+img {
+     page-break-inside:avoid; 
+     page-break-after:avoid; 
+}
+
+
+}
