@@ -4,9 +4,9 @@
 * Biaya Produksi yaitu seluruh biaya yang di pergunakan untuk proses produksi yang terdiri dari biaya bahan baku, biaya tenaga kerja langsung & biaya-biaya lainnya.Biaya Produksi Terjadi pada perusahaan manufaktur / perusahaan industri.Dalam perusahaan industri harga pokok ditentukan oleh bahan baku yang dipakai + biaya tenaga kerja langsung + biaya-biaya produksi tidak langsung (biaya overhead).
 
 ==Batasan Masalah (Fitur)==
-* Tidak adanya perhitungaan ekuivalen
+* Tidak ada barang hilang awal maupun akhir
 * Perhitungan Harga Pokok Produksi bukan untuk satu/dua departemen
-* Aplikasi ini hanya sederhana saja
+* Aplikasi ini hanya digunakan untuk perhitungan harga pokok produksi saja
 
 ==Pembuat		:Rohmatul Ummah==
 
@@ -78,5 +78,4 @@
 * Membuat file hapus 
 
 ==09 Juli 2018==
-* Melanjutkan membuat file edit 
-* Melanjutkan Membuat file hapus 
+* Melanjutkan fitur edit 
